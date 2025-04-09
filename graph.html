@@ -1,0 +1,155 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "font": {"color": "black"}, "id": "183", "label": "Document", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "184", "label": "Patient", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "185", "label": "Disease", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "186", "label": "Disease", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "187", "label": "Document", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "188", "label": "Patient", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "189", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "190", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "191", "label": "Medication", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "192", "label": "Medication", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "194", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "195", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "196", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "197", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "198", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "199", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "201", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "202", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "203", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "205", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "206", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "207", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "208", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "209", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "214", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "215", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "216", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "217", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "218", "label": "Symptom", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "193", "label": "Document", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "200", "label": "Document", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "204", "label": "Document", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "210", "label": "Document", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "213", "label": "Document", "shape": "dot"}, {"color": "#97c2fc", "font": {"color": "black"}, "id": "219", "label": "Document", "shape": "dot"}]);
+                  edges = new vis.DataSet([{"from": "183", "label": "MENTIONS", "to": "184"}, {"from": "184", "label": "HAS_DISEASE", "to": "185"}, {"from": "184", "label": "HAS_DISEASE", "to": "186"}, {"from": "187", "label": "MENTIONS", "to": "185"}, {"from": "187", "label": "MENTIONS", "to": "188"}, {"from": "187", "label": "MENTIONS", "to": "189"}, {"from": "187", "label": "MENTIONS", "to": "190"}, {"from": "187", "label": "MENTIONS", "to": "191"}, {"from": "187", "label": "MENTIONS", "to": "192"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "189"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "190"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "194"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "195"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "196"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "197"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "198"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "199"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "201"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "202"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "203"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "205"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "206"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "207"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "208"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "209"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "214"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "215"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "216"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "217"}, {"from": "188", "label": "HAS_SYMPTOM", "to": "218"}, {"from": "188", "label": "HAS_DISEASE", "to": "185"}, {"from": "188", "label": "TAKES_MEDICATION", "to": "191"}, {"from": "188", "label": "TAKES_MEDICATION", "to": "192"}, {"from": "193", "label": "MENTIONS", "to": "188"}, {"from": "200", "label": "MENTIONS", "to": "188"}, {"from": "204", "label": "MENTIONS", "to": "188"}, {"from": "210", "label": "MENTIONS", "to": "188"}, {"from": "213", "label": "MENTIONS", "to": "188"}, {"from": "219", "label": "MENTIONS", "to": "185"}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
