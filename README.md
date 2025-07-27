@@ -5,3 +5,6 @@ The project addresses challenges in querying large datasets and visualizing comp
 these are few diagram 
 <img width="660" height="777" alt="visualisation(1)" src="https://github.com/user-attachments/assets/c6c77bed-f204-4532-a0a9-a3f25c3a0b01" />
 
+<img width="660" height="777" alt="visualisation" src="https://github.com/user-attachments/assets/b2825edf-4032-4ce7-b9c6-a226312bdf17" />
+
+
